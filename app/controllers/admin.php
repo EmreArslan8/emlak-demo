@@ -177,7 +177,11 @@ function handle_uploads(string $field): array
     $files = $_FILES[$field];
     $names = (array) $files['name'];
     if (!is_dir(UPLOAD_DIR)) {
-        mkdir(UPLOAD_DIR, 0775, true);
+        @mkdir(UPLOAD_DIR, 0775, true);
+    }
+    if (!is_writable(UPLOAD_DIR)) { // ör. Vercel gibi salt-okunur ortamlar
+        flash('error', 'Bu sunucuda dosya yükleme kapalı; görsel bağlantısı kullanın.');
+        return $saved;
     }
     $allowed = [IMAGETYPE_JPEG => 'jpg', IMAGETYPE_PNG => 'png', IMAGETYPE_WEBP => 'webp'];
     foreach ($names as $i => $name) {

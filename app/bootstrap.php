@@ -7,7 +7,10 @@ define('DB_PATH', getenv('EMLAK_DB') ?: ROOT . '/storage/emlak.sqlite');
 define('UPLOAD_DIR', ROOT . '/public/uploads');
 
 // Uygulama alt dizinde çalışıyorsa (ör. /emlak) linkler buna göre üretilir.
-$base = rtrim(str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'] ?? '/')), '/');
+$base = getenv('EMLAK_BASE');
+if ($base === false) {
+    $base = rtrim(str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'] ?? '/')), '/');
+}
 define('BASE', $base === '/' ? '' : $base);
 
 date_default_timezone_set('Europe/Istanbul');

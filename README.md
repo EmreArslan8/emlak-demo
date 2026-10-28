@@ -59,3 +59,13 @@ storage/                               SQLite veritabanı
 
 MySQL'e geçiş (PDO DSN değişikliği), e-posta bildirimleri (SMTP), çoklu kullanıcı/rol, çoklu dil (TR/EN),
 görsel optimizasyonu (WebP dönüştürme), sahibinden/hepsiemlak XML ilan aktarımı.
+
+## Vercel'e dağıtım
+
+Depo `vercel.json` ile hazır gelir (`vercel-php` runtime'ı, giriş noktası `api/index.php`).
+Vercel → **Add New → Project → GitHub deposunu içe aktar** → Framework Preset: **Other** → Deploy.
+Build komutu veya ortam değişkeni gerekmez.
+
+Vercel'in dosya sistemi salt-okunur olduğundan veritabanı ve oturumlar `/tmp`'de tutulur:
+panelden yapılan değişiklikler geçicidir (sunucu yeniden başladığında demo verisine döner) ve dosya yükleme kapalıdır
+(görsel bağlantısı kullanılabilir). Kalıcı kullanım için PHP destekli klasik bir hosting (cPanel/Apache) önerilir.
