@@ -42,31 +42,28 @@
                 <button class="search__btn" type="submit" aria-label="Ara"><?= icon('search') ?><span>Portföyü keşfet</span></button>
             </div>
         </form>
-    </div>
-    <a class="hero__scroll" href="#portfoy" aria-label="Aşağı kaydır"><span></span></a>
-</section>
-
-<section class="intro" id="portfoy">
-    <div class="container intro__inner">
-        <p class="kicker">Vista Gayrimenkul</p>
-        <p class="intro__text">Boğaz'dan Bağdat Caddesi'ne, İstanbul'un en seçkin adreslerinde <em>yerinde incelenmiş</em> bir portföy ve her adımda yanınızda olan uzman bir ekip.</p>
-        <ul class="numbers">
-            <li><strong>20+</strong><span>Yıllık deneyim</span></li>
-            <li><strong>1.200+</strong><span>Tamamlanan işlem</span></li>
-            <li><strong>₺4,8 mr</strong><span>Toplam işlem hacmi</span></li>
-            <li><strong><?= $stats['aktif'] ?></strong><span>Aktif portföy</span></li>
-        </ul>
+        <nav class="quick-links" aria-label="Hızlı arama">
+            <?php foreach ($catCounts as $k => $c): ?>
+                <a href="<?= url('ilanlar', ['kategori' => $k]) ?>"><?= e(category_label($k)) ?> <small><?= $c ?></small></a>
+            <?php endforeach; ?>
+        </nav>
     </div>
 </section>
 
-<section class="section section--flush-top">
+
+
+<section class="section" id="portfoy">
     <div class="container">
         <div class="section__head">
             <div>
                 <p class="kicker">Seçkin portföy</p>
-                <h2 class="title">Öne çıkan mülkler</h2>
+                <h2 class="title">Öne çıkan ilanlar</h2>
             </div>
-            <a class="link-arrow" href="<?= url('ilanlar') ?>">Tüm portföy <?= icon('arrow') ?></a>
+            <nav class="tabs" aria-label="İlan tipi">
+                <a href="<?= url('ilanlar') ?>">Tümü <small><?= $stats['aktif'] ?></small></a>
+                <a href="<?= url('satilik') ?>">Satılık <small><?= $stats['satilik'] ?></small></a>
+                <a href="<?= url('kiralik') ?>">Kiralık <small><?= $stats['kiralik'] ?></small></a>
+            </nav>
         </div>
         <?php if ($hero): ?>
             <a class="showcase" href="<?= url('ilan/' . $hero['slug']) ?>">
@@ -88,6 +85,20 @@
         <div class="grid grid--3">
             <?php foreach (array_slice($featured, 1) as $l) partial('site/_card', ['l' => $l]); ?>
         </div>
+        <div class="center-cta"><a class="btn btn--dark" href="<?= url('ilanlar') ?>">Tüm ilanları görüntüle (<?= $stats['aktif'] ?>) <?= icon('arrow') ?></a></div>
+    </div>
+</section>
+
+<section class="intro">
+    <div class="container intro__inner">
+        <p class="kicker">Vista Gayrimenkul</p>
+        <p class="intro__text">Boğaz'dan Bağdat Caddesi'ne, İstanbul'un en seçkin adreslerinde <em>yerinde incelenmiş</em> bir portföy ve her adımda yanınızda olan uzman bir ekip.</p>
+        <ul class="numbers">
+            <li><strong>20+</strong><span>Yıllık deneyim</span></li>
+            <li><strong>1.200+</strong><span>Tamamlanan işlem</span></li>
+            <li><strong>₺4,8 mr</strong><span>Toplam işlem hacmi</span></li>
+            <li><strong><?= $stats['aktif'] ?></strong><span>Aktif portföy</span></li>
+        </ul>
     </div>
 </section>
 

@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 function home(): void
 {
-    [$featured] = listings_query(['sirala' => ''], 6);
+    [$featured] = listings_query(['sirala' => ''], 7);
     view('site/home', [
         'featured' => $featured,
         'agents' => db_all('SELECT * FROM agents ORDER BY sort, id LIMIT 4'),
@@ -16,8 +16,10 @@ function home(): void
         'sold' => array_map('hydrate_listing', db_all("SELECT * FROM listings WHERE status = 'satildi' ORDER BY price DESC LIMIT 3")),
         'stats' => [
             'aktif' => (int) db_value("SELECT COUNT(*) FROM listings WHERE status = 'aktif'"),
-            'danisman' => (int) db_value('SELECT COUNT(*) FROM agents'),
+            'satilik' => (int) db_value("SELECT COUNT(*) FROM listings WHERE status = 'aktif' AND type = 'satilik'"),
+            'kiralik' => (int) db_value("SELECT COUNT(*) FROM listings WHERE status = 'aktif' AND type = 'kiralik'"),
         ],
+        'catCounts' => array_column(db_all("SELECT category, COUNT(*) c FROM listings WHERE status = 'aktif' GROUP BY category ORDER BY c DESC"), 'c', 'category'),
         'meta' => ['title' => setting('site_name') . ' — ' . setting('tagline'), 'raw_title' => true],
     ]);
 }

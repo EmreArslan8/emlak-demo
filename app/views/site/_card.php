@@ -9,10 +9,16 @@
         <p class="card__loc"><?= e($l['neighborhood']) ?>, <?= e($l['district']) ?></p>
         <h3 class="card__title"><a href="<?= url('ilan/' . $l['slug']) ?>"><?= e($l['title']) ?></a></h3>
         <ul class="card__facts">
-            <li><?= e(category_label($l['category'])) ?></li>
-            <?php if ($l['rooms'] && $l['rooms'] !== '-'): ?><li><?= e($l['rooms']) ?></li><?php endif; ?>
-            <li><?= number_format((int) $l['gross_m2'], 0, ',', '.') ?> m²</li>
+            <?php if ($l['rooms'] && $l['rooms'] !== '-'): ?><li><?= icon('bed') ?> <?= e($l['rooms']) ?></li><?php endif; ?>
+            <?php if ($l['bathrooms']): ?><li><?= icon('bath') ?> <?= (int) $l['bathrooms'] ?></li><?php endif; ?>
+            <li><?= icon('area') ?> <?= number_format((int) $l['gross_m2'], 0, ',', '.') ?> m²</li>
+            <li class="card__cat"><?= e(category_label($l['category'])) ?></li>
         </ul>
-        <p class="card__price"><?= price($l['price'], $l['type']) ?></p>
+        <div class="card__foot">
+            <p class="card__price"><?= price($l['price'], $l['type']) ?></p>
+            <?php if (!$sold): ?>
+                <a class="card__wa" href="<?= wa_link(setting('whatsapp'), 'Merhaba, "' . $l['title'] . '" (İlan No: #' . $l['id'] . ') hakkında bilgi almak istiyorum.') ?>" target="_blank" rel="noopener" aria-label="Bu ilan için WhatsApp'tan yazın"><?= icon('whatsapp') ?></a>
+            <?php endif; ?>
+        </div>
     </div>
 </article>

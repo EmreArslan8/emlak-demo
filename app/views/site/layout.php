@@ -62,6 +62,7 @@ $wa = setting('whatsapp');
         </nav>
         <div class="header__cta">
             <a class="header__phone" href="<?= tel_link(setting('phone')) ?>"><?= e(setting('phone')) ?></a>
+            <a class="header__wa" href="<?= wa_link($wa) ?>" target="_blank" rel="noopener" aria-label="WhatsApp"><?= icon('whatsapp') ?></a>
             <a class="btn btn--outline btn--sm" href="<?= url('iletisim', ['konu' => 'Mülkümü değerlendirin']) ?>">Değerleme</a>
             <button class="burger" id="burger" aria-label="Menüyü aç" aria-expanded="false" aria-controls="nav"><span></span><span></span></button>
         </div>
@@ -123,7 +124,7 @@ $wa = setting('whatsapp');
     </div>
 </footer>
 
-<a class="wa-float" href="<?= wa_link($wa, 'Merhaba, web siteniz üzerinden ulaşıyorum.') ?>" target="_blank" rel="noopener" aria-label="WhatsApp ile yazın"><?= icon('whatsapp') ?></a>
+<a class="wa-float" href="<?= wa_link($wa, 'Merhaba, web siteniz üzerinden ulaşıyorum.') ?>" target="_blank" rel="noopener" aria-label="WhatsApp ile yazın"><?= icon('whatsapp') ?><span>WhatsApp'tan yazın</span></a>
 
 <script src="<?= asset('vendor/leaflet/leaflet.js') ?>" defer></script>
 <script src="<?= asset('js/app.js') ?>" defer></script>
