@@ -20,8 +20,8 @@ function seed(PDO $pdo): void
     $settings = [
         'site_name' => 'Vista Gayrimenkul',
         'tagline' => 'İstanbul\'da doğru adres, doğru yatırım.',
-        'phone' => '+90 212 555 12 34',
-        'whatsapp' => '+90 532 555 12 34',
+        'phone' => '+90 212 000 00 00',
+        'whatsapp' => '+90 500 000 00 00',
         'email' => 'info@vistagayrimenkul.com',
         'address' => 'Bağdat Caddesi No: 214, Caddebostan, Kadıköy / İstanbul',
         'office_lat' => '40.9645',
@@ -38,13 +38,13 @@ function seed(PDO $pdo): void
     }
 
     $agents = [
-        ['Elif Aydın', 'Kurucu Ortak & Kıdemli Danışman', '+90 532 111 22 33', 'photo-1494790108377-be9c29b29330', 18, 'Türkçe, İngilizce, Almanca', 'Lüks konut, Boğaz hattı yalı ve villalar',
+        ['Elif Aydın', 'Kurucu Ortak & Kıdemli Danışman', '+90 500 000 00 01', 'photo-1494790108377-be9c29b29330', 18, 'Türkçe, İngilizce, Almanca', 'Lüks konut, Boğaz hattı yalı ve villalar',
             "Elif, 18 yıllık sektör tecrübesiyle İstanbul'un Boğaz hattındaki lüks konut piyasasının en tanınan isimlerinden biri. Yatırımcı ve yabancı müşteri portföyü ile özellikle Bebek, Arnavutköy ve Sarıyer bölgelerinde uzmanlaşmıştır.\n\nMüşterileriyle uzun vadeli güven ilişkisi kurmayı önceliği olarak görür; her işlemi hukuki ve finansal açıdan uçtan uca takip eder."],
-        ['Mert Kaya', 'Ticari Gayrimenkul Uzmanı', '+90 533 222 33 44', 'photo-1507003211169-0a1dd7228f2d', 12, 'Türkçe, İngilizce', 'Ofis, dükkan, plaza katı ve yatırım amaçlı ticari mülkler',
+        ['Mert Kaya', 'Ticari Gayrimenkul Uzmanı', '+90 500 000 00 02', 'photo-1507003211169-0a1dd7228f2d', 12, 'Türkçe, İngilizce', 'Ofis, dükkan, plaza katı ve yatırım amaçlı ticari mülkler',
             "Mert, Maslak–Levent iş aksında ofis ve plaza katı kiralama/satış süreçlerinde 12 yıllık deneyime sahiptir. Kurumsal firmaların yer seçimi, kira müzakeresi ve yatırım getirisi analizlerinde danışmanlık verir."],
-        ['Zeynep Demir', 'Konut Danışmanı', '+90 535 333 44 55', 'photo-1438761681033-6461ffad8d80', 7, 'Türkçe, İngilizce, Rusça', 'Anadolu Yakası daire ve rezidans projeleri',
+        ['Zeynep Demir', 'Konut Danışmanı', '+90 500 000 00 03', 'photo-1438761681033-6461ffad8d80', 7, 'Türkçe, İngilizce, Rusça', 'Anadolu Yakası daire ve rezidans projeleri',
             "Zeynep, Kadıköy, Ataşehir ve Üsküdar bölgelerinde ilk evini alacak aileler ve genç profesyonellerle çalışır. Kredi süreçleri ve proje karşılaştırmalarında detaycı yaklaşımıyla bilinir."],
-        ['Can Öztürk', 'Arsa & Proje Danışmanı', '+90 536 444 55 66', 'photo-1500648767791-00dcc994a43e', 10, 'Türkçe, Arapça', 'Arsa, kat karşılığı ve kentsel dönüşüm projeleri',
+        ['Can Öztürk', 'Arsa & Proje Danışmanı', '+90 500 000 00 04', 'photo-1500648767791-00dcc994a43e', 10, 'Türkçe, Arapça', 'Arsa, kat karşılığı ve kentsel dönüşüm projeleri',
             "Can, imar durumu analizi, kat karşılığı anlaşmalar ve kentsel dönüşüm süreçlerinde mal sahipleri ile müteahhitler arasında köprü görevi görür. Avrupa Yakası batı aksı ve Çekmeköy bölgesinde aktif portföy yönetir."],
     ];
     $agentIds = [];
@@ -136,10 +136,10 @@ function seed(PDO $pdo): void
             'author' => 'Vista Gayrimenkul', 'published_at' => date('Y-m-d H:i:s', strtotime("-$days days"))]);
     }
 
-    $ins('messages', ['name' => 'Ayşe Yılmaz', 'email' => 'ayse@example.com', 'phone' => '0532 000 00 00',
+    $ins('messages', ['name' => 'Ayşe Yılmaz', 'email' => 'ayse@example.com', 'phone' => '0500 000 00 11',
         'subject' => 'İlan hakkında bilgi', 'message' => 'Merhaba, Moda\'daki 3+1 daire için hafta sonu görüntüleme randevusu almak istiyorum.',
         'listing_id' => 1, 'created_at' => date('Y-m-d H:i:s', strtotime('-3 hours'))]);
-    $ins('messages', ['name' => 'Burak Şen', 'email' => 'burak@example.com', 'phone' => '0533 000 00 00',
+    $ins('messages', ['name' => 'Burak Şen', 'email' => 'burak@example.com', 'phone' => '0500 000 00 12',
         'subject' => 'Evimi satmak istiyorum', 'message' => 'Ataşehir\'deki 2+1 dairem için değerleme hizmeti almak istiyorum. Uygun olduğunuzda arayabilir misiniz?',
         'is_read' => 1, 'created_at' => date('Y-m-d H:i:s', strtotime('-2 days'))]);
 
