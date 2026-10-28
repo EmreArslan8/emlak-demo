@@ -562,6 +562,7 @@ a.contact-card:hover { padding-left: 10px; }
     .burger { display: flex; }
     .header__cta { margin-left: auto; }
     .header__cta .btn { display: none; }
+    .header__wa { display: none; }
     .nav {
         position: absolute; top: 100%; left: 0; right: 0; height: calc(100dvh - var(--header-h)); margin: 0;
         flex-direction: column; gap: 0; background: var(--paper); color: var(--ink); padding: 24px 28px 40px; overflow-y: auto; border-top: 1px solid var(--line);
