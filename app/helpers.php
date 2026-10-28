@@ -114,6 +114,13 @@ function wa_link(string $phone, string $text = ''): string
     return 'https://wa.me/' . $digits . ($text !== '' ? '?text=' . rawurlencode($text) : '');
 }
 
+/** Google Maps gömülü harita (API anahtarı gerektirmez). */
+function gmap_iframe(string $query, int $zoom = 15, string $title = 'Harita'): string
+{
+    $src = 'https://maps.google.com/maps?q=' . rawurlencode($query) . '&z=' . $zoom . '&hl=tr&output=embed';
+    return '<iframe src="' . e($src) . '" title="' . e($title) . '" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>';
+}
+
 function tel_link(string $phone): string
 {
     return 'tel:+' . preg_replace('/\D/', '', $phone);

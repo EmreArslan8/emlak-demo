@@ -101,8 +101,8 @@ $schema = [
             <?php if ($l['lat']): ?>
                 <div class="panel">
                     <h2>Konum</h2>
-                    <p class="muted">Gizlilik nedeniyle konum yaklaşık olarak gösterilmektedir.</p>
-                    <div class="map" data-map data-lat="<?= e((string) $l['lat']) ?>" data-lng="<?= e((string) $l['lng']) ?>" data-zoom="15" data-circle="1"></div>
+                    <p class="muted"><?= e($l["neighborhood"]) ?> Mah., <?= e($l["district"]) ?> / <?= e($l["city"]) ?></p>
+                    <div class="map"><?= gmap_iframe($l['lat'] . ',' . $l['lng'], 15, $l['title'] . ' konumu') ?></div>
                     <a class="link-arrow" href="https://www.google.com/maps/search/?api=1&query=<?= e($l['lat'] . ',' . $l['lng']) ?>" target="_blank" rel="noopener">Google Haritalar'da aç <?= icon('external') ?></a>
                 </div>
             <?php endif; ?>

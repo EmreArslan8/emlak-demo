@@ -15,6 +15,6 @@
         </div>
     </div>
     <div class="container">
-        <div class="map map--lg" data-map data-lat="<?= e(setting('office_lat')) ?>" data-lng="<?= e(setting('office_lng')) ?>" data-zoom="16" data-popup="<?= e(setting('site_name')) ?>"></div>
+        <div class="map map--lg"><?= gmap_iframe(setting('office_lat') . ',' . setting('office_lng'), 16, setting('site_name') . ' ofis konumu') ?></div>
     </div>
 </section>
