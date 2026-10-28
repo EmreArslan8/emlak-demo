@@ -1,14 +1,15 @@
+<?php $hero = $featured[0] ?? null; ?>
 <section class="hero">
     <div class="hero__bg">
-        <img src="<?= e(img('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9', 2000)) ?>" alt="" fetchpriority="high">
+        <img src="<?= e(img('https://images.unsplash.com/photo-1613490493576-7fde63acd811', 2400)) ?>" alt="" fetchpriority="high">
     </div>
     <div class="container hero__inner">
-        <span class="eyebrow eyebrow--light"><?= icon('shield') ?> Yetkili &amp; Lisanslı Emlak Ofisi</span>
-        <h1><?= e(setting('hero_title')) ?></h1>
+        <p class="kicker kicker--light">İstanbul · Since 2004</p>
+        <h1 class="display"><?= e(setting('hero_title')) ?></h1>
         <p class="hero__lead"><?= e(setting('hero_subtitle')) ?></p>
 
-        <form class="search" action="<?= url('ilanlar') ?>" method="get" data-search>
-            <div class="search__tabs" role="tablist">
+        <form class="search" action="<?= url('ilanlar') ?>" method="get">
+            <div class="search__tabs">
                 <label><input type="radio" name="tip" value="satilik" checked><span>Satılık</span></label>
                 <label><input type="radio" name="tip" value="kiralik"><span>Kiralık</span></label>
             </div>
@@ -16,79 +17,94 @@
                 <label class="search__field">
                     <span>Konum</span>
                     <select name="ilce">
-                        <option value="">Tüm İlçeler</option>
+                        <option value="">Tüm İstanbul</option>
                         <?php foreach ($districts as $d): ?><option><?= e($d['district']) ?></option><?php endforeach; ?>
                     </select>
                 </label>
                 <label class="search__field">
-                    <span>Emlak Tipi</span>
+                    <span>Mülk tipi</span>
                     <select name="kategori">
                         <option value="">Tümü</option>
                         <?php foreach (CATEGORIES as $k => $v): ?><option value="<?= $k ?>"><?= e($v) ?></option><?php endforeach; ?>
                     </select>
                 </label>
                 <label class="search__field">
-                    <span>Oda Sayısı</span>
+                    <span>Oda</span>
                     <select name="oda">
                         <option value="">Farketmez</option>
                         <?php foreach (['1+1', '2+1', '3+1', '4+'] as $r): ?><option><?= $r ?></option><?php endforeach; ?>
                     </select>
                 </label>
                 <label class="search__field">
-                    <span>Maks. Fiyat</span>
-                    <input type="text" name="max_fiyat" inputmode="numeric" placeholder="Örn. 15.000.000" data-money>
+                    <span>Bütçe (maks.)</span>
+                    <input type="text" name="max_fiyat" inputmode="numeric" placeholder="₺" data-money>
                 </label>
-                <button class="btn btn--accent search__btn" type="submit"><?= icon('search') ?> <span>İlan Ara</span></button>
+                <button class="search__btn" type="submit" aria-label="Ara"><?= icon('search') ?><span>Portföyü keşfet</span></button>
             </div>
         </form>
+    </div>
+    <a class="hero__scroll" href="#portfoy" aria-label="Aşağı kaydır"><span></span></a>
+</section>
 
-        <ul class="hero__stats">
-            <li><strong>20+</strong><span>Yıllık tecrübe</span></li>
+<section class="intro" id="portfoy">
+    <div class="container intro__inner">
+        <p class="kicker">Vista Gayrimenkul</p>
+        <p class="intro__text">Boğaz'dan Bağdat Caddesi'ne, İstanbul'un en seçkin adreslerinde <em>yerinde incelenmiş</em> bir portföy ve her adımda yanınızda olan uzman bir ekip.</p>
+        <ul class="numbers">
+            <li><strong>20+</strong><span>Yıllık deneyim</span></li>
             <li><strong>1.200+</strong><span>Tamamlanan işlem</span></li>
+            <li><strong>₺4,8 mr</strong><span>Toplam işlem hacmi</span></li>
             <li><strong><?= $stats['aktif'] ?></strong><span>Aktif portföy</span></li>
-            <li><strong>4.9<small>/5</small></strong><span>Müşteri memnuniyeti</span></li>
         </ul>
     </div>
 </section>
 
-<section class="section">
+<section class="section section--flush-top">
     <div class="container">
         <div class="section__head">
             <div>
-                <span class="eyebrow">Portföyümüz</span>
-                <h2>Öne çıkan ilanlar</h2>
-                <p>Uzman ekibimizin titizlikle seçtiği, yerinde incelenmiş güncel mülkler.</p>
+                <p class="kicker">Seçkin portföy</p>
+                <h2 class="title">Öne çıkan mülkler</h2>
             </div>
-            <a class="btn btn--ghost" href="<?= url('ilanlar') ?>">Tüm ilanlar <?= icon('arrow') ?></a>
+            <a class="link-arrow" href="<?= url('ilanlar') ?>">Tüm portföy <?= icon('arrow') ?></a>
         </div>
+        <?php if ($hero): ?>
+            <a class="showcase" href="<?= url('ilan/' . $hero['slug']) ?>">
+                <div class="showcase__media"><img src="<?= e(img($hero['cover'], 1800)) ?>" alt="<?= e($hero['title']) ?>" loading="lazy"></div>
+                <div class="showcase__body">
+                    <p class="kicker"><?= e(LISTING_TYPES[$hero['type']]) ?> · <?= e($hero['neighborhood']) ?>, <?= e($hero['district']) ?></p>
+                    <h3 class="showcase__title"><?= e($hero['title']) ?></h3>
+                    <p class="showcase__text"><?= e(excerpt($hero['description'], 180)) ?></p>
+                    <ul class="specs">
+                        <?php if ($hero['rooms'] !== '-'): ?><li><strong><?= e($hero['rooms']) ?></strong>Oda</li><?php endif; ?>
+                        <li><strong><?= number_format((int) $hero['gross_m2'], 0, ',', '.') ?></strong>m²</li>
+                        <?php if ($hero['bathrooms']): ?><li><strong><?= (int) $hero['bathrooms'] ?></strong>Banyo</li><?php endif; ?>
+                    </ul>
+                    <p class="showcase__price"><?= price($hero['price'], $hero['type']) ?></p>
+                    <span class="link-arrow">Mülkü inceleyin <?= icon('arrow') ?></span>
+                </div>
+            </a>
+        <?php endif; ?>
         <div class="grid grid--3">
-            <?php foreach ($featured as $l) partial('site/_card', ['l' => $l]); ?>
+            <?php foreach (array_slice($featured, 1) as $l) partial('site/_card', ['l' => $l]); ?>
         </div>
     </div>
 </section>
 
-<section class="section section--tint">
+<section class="section section--stone">
     <div class="container">
-        <div class="section__head section__head--center">
+        <div class="section__head">
             <div>
-                <span class="eyebrow">Ne arıyorsunuz?</span>
-                <h2>Kategorilere göre keşfedin</h2>
+                <p class="kicker">Semtler</p>
+                <h2 class="title">İstanbul'u semt semt keşfedin</h2>
             </div>
+            <p class="section__aside">Her semtin karakterini, fiyat dinamiklerini ve gelecek potansiyelini bölge uzmanlarımızdan dinleyin.</p>
         </div>
-        <div class="cats">
-            <?php
-            $catCards = [
-                ['daire', 'Daire', 'photo-1545324418-cc1a3fa10c00'],
-                ['villa', 'Villa', 'photo-1613490493576-7fde63acd811'],
-                ['rezidans', 'Rezidans', 'photo-1486406146926-c627a92ad1ab'],
-                ['ofis', 'Ofis & Ticari', 'photo-1497366216548-37526070297c'],
-                ['arsa', 'Arsa', 'photo-1500382017468-9049fed747ef'],
-            ];
-            foreach ($catCards as [$k, $label, $photo]):
-                $c = (int) db_value("SELECT COUNT(*) FROM listings WHERE status='aktif' AND category = ?", [$k]); ?>
-                <a class="cat" href="<?= url('ilanlar', ['kategori' => $k]) ?>">
-                    <img src="<?= e(img('https://images.unsplash.com/' . $photo, 600)) ?>" alt="<?= e($label) ?>" loading="lazy">
-                    <span class="cat__label"><strong><?= e($label) ?></strong><small><?= $c ?> ilan</small></span>
+        <div class="districts">
+            <?php foreach ($neighborhoods as $n): ?>
+                <a class="district" href="<?= url('ilanlar', ['ilce' => $n['district']]) ?>">
+                    <img src="<?= e(img($n['cover'], 900)) ?>" alt="<?= e($n['district']) ?>" loading="lazy">
+                    <span class="district__label"><strong><?= e($n['district']) ?></strong><small><?= (int) $n['c'] ?> mülk <?= icon('arrow') ?></small></span>
                 </a>
             <?php endforeach; ?>
         </div>
@@ -98,39 +114,76 @@
 <section class="section">
     <div class="container split">
         <div class="split__media">
-            <img src="<?= e(img('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c', 1200)) ?>" alt="Modern salon" loading="lazy">
-            <div class="floating-card">
-                <span class="floating-card__icon"><?= icon('key') ?></span>
-                <div><strong>Ortalama 38 gün</strong><small>içinde satış / kiralama</small></div>
-            </div>
+            <img src="<?= e(img('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c', 1400)) ?>" alt="Modern salon" loading="lazy">
         </div>
         <div class="split__body">
-            <span class="eyebrow">Neden <?= e(explode(' ', setting('site_name'))[0]) ?>?</span>
-            <h2>Gayrimenkulde şeffaf, hızlı ve güvenli süreç</h2>
-            <p>Mülkünüzü doğru fiyatla piyasaya sunmaktan tapu devrine kadar her adımda yanınızdayız. Bölge verilerine dayalı değerleme, profesyonel fotoğraf ve geniş alıcı ağımızla zamandan kazanırsınız.</p>
-            <ul class="checklist">
-                <li><?= icon('check') ?> Ücretsiz ekspertiz ve piyasa analizi</li>
-                <li><?= icon('check') ?> Profesyonel fotoğraf, video ve sanal tur</li>
-                <li><?= icon('check') ?> Tapu, kredi ve hukuki süreç takibi</li>
-                <li><?= icon('check') ?> Yabancı yatırımcılar için çok dilli danışmanlık</li>
-            </ul>
-            <div class="btn-row">
-                <a class="btn btn--primary" href="<?= url('hizmetlerimiz') ?>">Hizmetlerimiz</a>
-                <a class="btn btn--ghost" href="<?= url('hakkimizda') ?>">Bizi tanıyın</a>
-            </div>
+            <p class="kicker">Yaklaşımımız</p>
+            <h2 class="title">Az ama özenle seçilmiş. Her mülk, her müşteri.</h2>
+            <p>Mülkünüzü doğru fiyatla piyasaya sunmaktan tapu devrine kadar her adımı tek bir danışman yönetir. Bölge verilerine dayalı değerleme, profesyonel prodüksiyon ve seçkin alıcı ağımızla süreci hızlı ve gizli yürütürüz.</p>
+            <ol class="pillars">
+                <li><span>01</span><div><strong>Veriye dayalı değerleme</strong>48 saat içinde emsal analizli rapor.</div></li>
+                <li><span>02</span><div><strong>Prodüksiyon & pazarlama</strong>Profesyonel fotoğraf, film ve hedefli kampanyalar.</div></li>
+                <li><span>03</span><div><strong>Uçtan uca süreç</strong>Kredi, tapu ve hukuki takip tek elden.</div></li>
+            </ol>
+            <a class="btn btn--dark" href="<?= url('hizmetlerimiz') ?>">Hizmetlerimiz</a>
         </div>
     </div>
 </section>
 
+<?php if ($sold): ?>
 <section class="section section--dark">
     <div class="container">
         <div class="section__head">
             <div>
-                <span class="eyebrow eyebrow--light">Ekibimiz</span>
-                <h2>Uzman danışmanlarımız</h2>
-                <p>Her biri kendi bölgesinde uzmanlaşmış, lisanslı gayrimenkul danışmanları.</p>
+                <p class="kicker kicker--light">Son işlemler</p>
+                <h2 class="title">Satılanlar</h2>
             </div>
-            <a class="btn btn--light" href="<?= url('danismanlar') ?>">Tüm ekip <?= icon('arrow') ?></a>
+            <p class="section__aside">Gizlilik esasıyla yürüttüğümüz işlemlerden bazıları.</p>
+        </div>
+        <div class="grid grid--3">
+            <?php foreach ($sold as $l): ?>
+                <a class="sold" href="<?= url('ilan/' . $l['slug']) ?>">
+                    <div class="sold__media"><img src="<?= e(img($l['cover'], 900)) ?>" alt="<?= e($l['title']) ?>" loading="lazy"><span class="sold__tag">Satıldı</span></div>
+                    <p class="sold__loc"><?= e($l['neighborhood']) ?>, <?= e($l['district']) ?></p>
+                    <h3><?= e($l['title']) ?></h3>
+                </a>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</section>
+<?php endif; ?>
+
+<section class="section">
+    <div class="container">
+        <div class="section__head section__head--center">
+            <div>
+                <p class="kicker">Müşterilerimiz</p>
+                <h2 class="title">Güvenle anlatılan hikâyeler</h2>
+            </div>
+        </div>
+        <div class="quotes">
+            <?php foreach ([
+                ['Yurt dışındayken evimizin satış sürecini baştan sona Elif Hanım yönetti. Tapu gününe kadar her şey şeffaf ve planlandığı gibiydi.', 'Selin & Kerem T.', 'Bebek · Satış'],
+                ['Üç hafta içinde doğru kiracıyı buldular; sözleşmeden teslim tutanağına kadar hiçbir detayla uğraşmadım.', 'Ahmet Y.', 'Fenerbahçe · Kiralama'],
+                ['Şirketimizin yeni ofisi için Maslak\'ta beş alternatifi karşılaştırmalı raporla sundular. Kararı vermek çok kolaylaştı.', 'Deniz K., Operasyon Direktörü', 'Maslak · Ticari'],
+            ] as [$q, $who, $what]): ?>
+                <figure class="quote">
+                    <blockquote>“<?= e($q) ?>”</blockquote>
+                    <figcaption><strong><?= e($who) ?></strong><span><?= e($what) ?></span></figcaption>
+                </figure>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</section>
+
+<section class="section section--stone">
+    <div class="container">
+        <div class="section__head">
+            <div>
+                <p class="kicker">Ekibimiz</p>
+                <h2 class="title">Danışmanlarımız</h2>
+            </div>
+            <a class="link-arrow" href="<?= url('danismanlar') ?>">Tüm ekip <?= icon('arrow') ?></a>
         </div>
         <div class="grid grid--4">
             <?php foreach ($agents as $a) partial('site/_agent_card', ['a' => $a]); ?>
@@ -142,10 +195,10 @@
     <div class="container">
         <div class="section__head">
             <div>
-                <span class="eyebrow">Blog</span>
-                <h2>Piyasadan güncel yazılar</h2>
+                <p class="kicker">Journal</p>
+                <h2 class="title">Piyasadan notlar</h2>
             </div>
-            <a class="btn btn--ghost" href="<?= url('blog') ?>">Tüm yazılar <?= icon('arrow') ?></a>
+            <a class="link-arrow" href="<?= url('blog') ?>">Tüm yazılar <?= icon('arrow') ?></a>
         </div>
         <div class="grid grid--3">
             <?php foreach ($posts as $p) partial('site/_post_card', ['p' => $p]); ?>

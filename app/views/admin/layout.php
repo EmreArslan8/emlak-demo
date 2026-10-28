@@ -6,7 +6,7 @@
     <meta name="robots" content="noindex">
     <title><?= e($title ?? 'Yönetim') ?> · <?= e(setting('site_name')) ?> Yönetim</title>
     <link rel="icon" href="<?= asset('img/favicon.svg') ?>" type="image/svg+xml">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="<?= asset('vendor/leaflet/leaflet.css') ?>">
     <link rel="stylesheet" href="<?= asset('css/admin.css') ?>">
     <script>window.addEventListener('error', function (e) { var t = e.target; if (t && t.tagName === 'IMG' && !t.dataset.fallback && !t.classList.contains('leaflet-tile')) { t.dataset.fallback = 1; t.src = '<?= BASE ?>/assets/img/placeholder.svg'; } }, true);</script>

@@ -9,6 +9,11 @@ function home(): void
         'agents' => db_all('SELECT * FROM agents ORDER BY sort, id LIMIT 4'),
         'posts' => db_all('SELECT * FROM posts WHERE published = 1 ORDER BY published_at DESC LIMIT 3'),
         'districts' => db_all("SELECT district, COUNT(*) c FROM listings WHERE status = 'aktif' GROUP BY district ORDER BY c DESC"),
+        'neighborhoods' => array_map('hydrate_listing', db_all(
+            "SELECT district, images, '[]' AS features, COUNT(*) c FROM listings WHERE status = 'aktif' AND category IN ('daire','villa','mustakil','rezidans')
+             GROUP BY district ORDER BY MAX(price) DESC LIMIT 4"
+        )),
+        'sold' => array_map('hydrate_listing', db_all("SELECT * FROM listings WHERE status = 'satildi' ORDER BY price DESC LIMIT 3")),
         'stats' => [
             'aktif' => (int) db_value("SELECT COUNT(*) FROM listings WHERE status = 'aktif'"),
             'danisman' => (int) db_value('SELECT COUNT(*) FROM agents'),
@@ -30,12 +35,12 @@ function listings(?string $forcedType = null): void
     [$mapItems] = listings_query($f, 200);
 
     $heading = match ($f['tip']) {
-        'satilik' => 'Satılık İlanlar',
-        'kiralik' => 'Kiralık İlanlar',
-        default => 'Tüm İlanlar',
+        'satilik' => 'Satılık Portföy',
+        'kiralik' => 'Kiralık Portföy',
+        default => 'Tüm Portföy',
     };
     if ($f['kategori']) {
-        $heading = ($f['tip'] ? LISTING_TYPES[$f['tip']] . ' ' : '') . category_label($f['kategori']) . ' İlanları';
+        $heading = ($f['tip'] ? LISTING_TYPES[$f['tip']] . ' ' : '') . category_label($f['kategori']);
     }
     if ($f['ilce']) {
         $heading = $f['ilce'] . ' — ' . $heading;
@@ -71,7 +76,7 @@ function listing_show(string $slug, array $extra = []): void
         [$l['id'], $l['category'], $l['district'], $l['type']]
     ));
     view('site/listing', [
-        'l' => $l, 'agent' => $agent, 'similar' => $similar, ...$extra,
+        'l' => $l, 'agent' => $agent, 'similar' => $similar, 'solidHeader' => true, ...$extra,
         'meta' => [
             'title' => $l['title'],
             'description' => excerpt($l['description'], 155),

@@ -27,8 +27,8 @@ function seed(PDO $pdo): void
         'office_lat' => '40.9645',
         'office_lng' => '29.0645',
         'working_hours' => 'Hafta içi 09:00 – 19:00 · Cumartesi 10:00 – 17:00',
-        'hero_title' => 'Hayalinizdeki evi birlikte bulalım',
-        'hero_subtitle' => '20 yılı aşkın tecrübe, 1.200+ mutlu aile. İstanbul\'un seçkin semtlerinde satılık ve kiralık portföy.',
+        'hero_title' => 'İstanbul\'un en seçkin adresleri',
+        'hero_subtitle' => 'Satış, kiralama ve yatırımda 20 yılı aşkın deneyim. Her adımda kişiye özel, gizlilik esaslı danışmanlık.',
         'instagram' => 'https://instagram.com/',
         'linkedin' => 'https://linkedin.com/',
         'meta_description' => 'Vista Gayrimenkul — İstanbul\'da satılık ve kiralık daire, villa, rezidans ve ticari gayrimenkul ilanları. Uzman danışman kadrosu ile güvenilir emlak hizmeti.',
@@ -98,9 +98,13 @@ function seed(PDO $pdo): void
             ['Krediye Uygun'], 'photo-1500382017468-9049fed747ef', 0, 0, 'aktif'],
         ['Kartal\'da Deniz Gören Yeni Proje 3+1', 'satilik', 'rezidans', 9850000, 'Kartal', 'Kordonboyu', 40.8900, 29.1900, '3+1', 150, 128, 2, '12', 25, 1, 'Yerden Isıtma',
             ['Deniz Manzarası', 'Site İçerisinde', 'Havuz', 'Spor Salonu', 'Kapalı Otopark', 'Güvenlik', 'Akıllı Ev', 'Krediye Uygun'], 'photo-1580587771525-78b9dba3b914', 1, 0, 'satildi'],
+        ['Arnavutköy\'de Boğaz Hattında Tarihi Yalı Dairesi', 'satilik', 'daire', 64000000, 'Beşiktaş', 'Arnavutköy', 41.0670, 29.0430, '4+1', 260, 225, 3, '1', 3, 110, 'Yerden Isıtma',
+            ['Boğaz Manzarası', 'Teras', 'Şömine', 'Ebeveyn Banyosu', 'Ankastre Mutfak'], 'photo-1600566753190-17f0baa2a6c3', 4, 0, 'satildi'],
+        ['Etiler\'de Bahçeli Tripleks Konak', 'satilik', 'villa', 72500000, 'Beşiktaş', 'Etiler', 41.0810, 29.0330, '6+2', 520, 450, 5, 'Bahçe', 3, 12, 'Yerden Isıtma',
+            ['Bahçe', 'Havuz', 'Kapalı Otopark', 'Güvenlik', 'Akıllı Ev', 'Giyinme Odası', 'Şömine', 'Jeneratör'], 'photo-1600585154340-be6161a56a0c', 6, 0, 'satildi'],
     ];
 
-    $agentFor = [0 => 2, 1 => 0, 2 => 0, 3 => 2, 4 => 2, 5 => 3, 6 => 3, 7 => 0, 8 => 2, 9 => 0, 10 => 1, 11 => 1, 12 => 3, 13 => 2];
+    $agentFor = [0 => 2, 1 => 0, 2 => 0, 3 => 2, 4 => 2, 5 => 3, 6 => 3, 7 => 0, 8 => 2, 9 => 0, 10 => 1, 11 => 1, 12 => 3, 13 => 2, 14 => 0, 15 => 0];
     foreach ($listings as $i => $l) {
         [$title, $type, $cat, $price, $district, $hood, $lat, $lng, $rooms, $gross, $net, $bath, $floor, $tfloors, $age, $heat, $feat, $cover, $off, $featured, $status] = $l;
         $created = date('Y-m-d H:i:s', strtotime('-' . ($i * 3 + 1) . ' days'));

@@ -206,7 +206,7 @@ function partial(string $name, array $data = []): void
 function not_found(): never
 {
     http_response_code(404);
-    view('site/404', ['meta' => ['title' => 'Sayfa bulunamadı']]);
+    view('site/404', ['meta' => ['title' => 'Sayfa bulunamadı'], 'solidHeader' => true]);
     exit;
 }
 

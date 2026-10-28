@@ -20,11 +20,11 @@ $wa = setting('whatsapp');
     <meta property="og:type" content="<?= e($meta['type'] ?? 'website') ?>">
     <meta property="og:url" content="<?= e($canonical) ?>">
     <?php if (!empty($meta['image'])): ?><meta property="og:image" content="<?= e($meta['image']) ?>"><?php endif; ?>
-    <meta name="theme-color" content="#0f3d3e">
+    <meta name="theme-color" content="#151412">
     <link rel="icon" href="<?= asset('img/favicon.svg') ?>" type="image/svg+xml">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="<?= asset('vendor/leaflet/leaflet.css') ?>">
     <link rel="stylesheet" href="<?= asset('css/style.css') ?>">
     <script>
@@ -41,34 +41,29 @@ $wa = setting('whatsapp');
     ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?></script>
 </head>
 <body>
-<div class="topbar">
-    <div class="container topbar__inner">
-        <span><?= icon('clock') ?> <?= e(setting('working_hours')) ?></span>
-        <span class="topbar__right">
-            <a href="mailto:<?= e(setting('email')) ?>"><?= icon('mail') ?> <?= e(setting('email')) ?></a>
-            <a href="<?= tel_link(setting('phone')) ?>"><?= icon('phone') ?> <?= e(setting('phone')) ?></a>
-        </span>
-    </div>
-</div>
-<header class="header" id="header">
+<header class="header<?= empty($solidHeader) ? ' header--overlay' : '' ?>" id="header">
     <div class="container header__inner">
         <a class="logo" href="<?= url() ?>" aria-label="<?= e($siteName) ?> ana sayfa">
-            <span class="logo__mark"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M4 15 16 5l12 10v12a1 1 0 0 1-1 1h-7v-8h-8v8H5a1 1 0 0 1-1-1z" fill="currentColor"/></svg></span>
-            <span class="logo__text"><?= e(explode(' ', $siteName)[0]) ?><small><?= e(implode(' ', array_slice(explode(' ', $siteName), 1))) ?></small></span>
+            <span class="logo__word"><?= e(mb_strtoupper(explode(' ', $siteName)[0])) ?></span>
+            <span class="logo__sub"><?= e(implode(' ', array_slice(explode(' ', $siteName), 1))) ?></span>
         </a>
         <nav class="nav" id="nav" aria-label="Ana menü">
-            <a class="<?= is_active('/') ?>" href="<?= url() ?>">Ana Sayfa</a>
             <a class="<?= is_active('/satilik') ?>" href="<?= url('satilik') ?>">Satılık</a>
             <a class="<?= is_active('/kiralik') ?>" href="<?= url('kiralik') ?>">Kiralık</a>
             <a class="<?= is_active('/danisman') ?>" href="<?= url('danismanlar') ?>">Danışmanlar</a>
-            <a class="<?= is_active('/hizmetlerimiz') ?>" href="<?= url('hizmetlerimiz') ?>">Hizmetlerimiz</a>
+            <a class="<?= is_active('/hizmetlerimiz') ?>" href="<?= url('hizmetlerimiz') ?>">Hizmetler</a>
             <a class="<?= is_active('/hakkimizda') ?>" href="<?= url('hakkimizda') ?>">Hakkımızda</a>
-            <a class="<?= is_active('/blog') ?>" href="<?= url('blog') ?>">Blog</a>
+            <a class="<?= is_active('/blog') ?>" href="<?= url('blog') ?>">Journal</a>
             <a class="<?= is_active('/iletisim') ?>" href="<?= url('iletisim') ?>">İletişim</a>
+            <div class="nav__mobile-extra">
+                <a href="<?= tel_link(setting('phone')) ?>"><?= icon('phone') ?> <?= e(setting('phone')) ?></a>
+                <a href="<?= wa_link($wa) ?>" target="_blank" rel="noopener"><?= icon('whatsapp') ?> WhatsApp</a>
+            </div>
         </nav>
         <div class="header__cta">
-            <a class="btn btn--accent btn--sm" href="<?= url('iletisim', ['konu' => 'Mülkümü değerlendirin']) ?>">Mülkünü Değerlendir</a>
-            <button class="burger" id="burger" aria-label="Menüyü aç" aria-expanded="false" aria-controls="nav"><span></span><span></span><span></span></button>
+            <a class="header__phone" href="<?= tel_link(setting('phone')) ?>"><?= e(setting('phone')) ?></a>
+            <a class="btn btn--outline btn--sm" href="<?= url('iletisim', ['konu' => 'Mülkümü değerlendirin']) ?>">Değerleme</a>
+            <button class="burger" id="burger" aria-label="Menüyü aç" aria-expanded="false" aria-controls="nav"><span></span><span></span></button>
         </div>
     </div>
 </header>
@@ -78,49 +73,57 @@ $wa = setting('whatsapp');
 </main>
 
 <footer class="footer">
-    <div class="container footer__grid">
-        <div>
-            <a class="logo logo--light" href="<?= url() ?>">
-                <span class="logo__mark"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M4 15 16 5l12 10v12a1 1 0 0 1-1 1h-7v-8h-8v8H5a1 1 0 0 1-1-1z" fill="currentColor"/></svg></span>
-                <span class="logo__text"><?= e(explode(' ', $siteName)[0]) ?><small><?= e(implode(' ', array_slice(explode(' ', $siteName), 1))) ?></small></span>
-            </a>
-            <p class="footer__about"><?= e(setting('tagline')) ?> Satış, kiralama ve yatırım danışmanlığında güvenilir çözüm ortağınız.</p>
-            <div class="socials">
-                <a href="<?= e(setting('instagram')) ?>" aria-label="Instagram" target="_blank" rel="noopener"><?= icon('instagram') ?></a>
-                <a href="<?= e(setting('linkedin')) ?>" aria-label="LinkedIn" target="_blank" rel="noopener"><?= icon('linkedin') ?></a>
-                <a href="<?= wa_link($wa) ?>" aria-label="WhatsApp" target="_blank" rel="noopener"><?= icon('whatsapp') ?></a>
+    <div class="container">
+        <div class="footer__top">
+            <div>
+                <p class="footer__kicker">Bir sonraki adresiniz için</p>
+                <h2 class="footer__title">Özel bir görüşme planlayalım.</h2>
+            </div>
+            <div class="footer__actions">
+                <a class="btn btn--light" href="<?= url('iletisim') ?>">Randevu oluştur</a>
+                <a class="btn btn--ghost-light" href="<?= wa_link($wa, 'Merhaba, web siteniz üzerinden ulaşıyorum.') ?>" target="_blank" rel="noopener"><?= icon('whatsapp') ?> WhatsApp</a>
             </div>
         </div>
-        <div>
-            <h4>Portföy</h4>
-            <a href="<?= url('satilik') ?>">Satılık İlanlar</a>
-            <a href="<?= url('kiralik') ?>">Kiralık İlanlar</a>
-            <a href="<?= url('ilanlar', ['kategori' => 'villa']) ?>">Villalar</a>
-            <a href="<?= url('ilanlar', ['kategori' => 'ofis']) ?>">Ticari Gayrimenkul</a>
+        <div class="footer__grid">
+            <div>
+                <a class="logo logo--light" href="<?= url() ?>">
+                    <span class="logo__word"><?= e(mb_strtoupper(explode(' ', $siteName)[0])) ?></span>
+                    <span class="logo__sub"><?= e(implode(' ', array_slice(explode(' ', $siteName), 1))) ?></span>
+                </a>
+                <p class="footer__about"><?= e(setting('tagline')) ?> 2004'ten bu yana İstanbul'un seçkin semtlerinde satış, kiralama ve yatırım danışmanlığı.</p>
+            </div>
+            <div>
+                <h4>Portföy</h4>
+                <a href="<?= url('satilik') ?>">Satılık</a>
+                <a href="<?= url('kiralik') ?>">Kiralık</a>
+                <a href="<?= url('ilanlar', ['kategori' => 'villa']) ?>">Villalar</a>
+                <a href="<?= url('ilanlar', ['kategori' => 'ofis']) ?>">Ticari</a>
+            </div>
+            <div>
+                <h4>Kurumsal</h4>
+                <a href="<?= url('hakkimizda') ?>">Hakkımızda</a>
+                <a href="<?= url('hizmetlerimiz') ?>">Hizmetler</a>
+                <a href="<?= url('danismanlar') ?>">Danışmanlar</a>
+                <a href="<?= url('blog') ?>">Journal</a>
+            </div>
+            <div>
+                <h4>Ofis</h4>
+                <p><?= e(setting('address')) ?></p>
+                <p><a href="<?= tel_link(setting('phone')) ?>"><?= e(setting('phone')) ?></a><br><a href="mailto:<?= e(setting('email')) ?>"><?= e(setting('email')) ?></a></p>
+                <div class="socials">
+                    <a href="<?= e(setting('instagram')) ?>" aria-label="Instagram" target="_blank" rel="noopener"><?= icon('instagram') ?></a>
+                    <a href="<?= e(setting('linkedin')) ?>" aria-label="LinkedIn" target="_blank" rel="noopener"><?= icon('linkedin') ?></a>
+                </div>
+            </div>
         </div>
-        <div>
-            <h4>Kurumsal</h4>
-            <a href="<?= url('hakkimizda') ?>">Hakkımızda</a>
-            <a href="<?= url('hizmetlerimiz') ?>">Hizmetlerimiz</a>
-            <a href="<?= url('danismanlar') ?>">Danışmanlarımız</a>
-            <a href="<?= url('blog') ?>">Blog &amp; Haberler</a>
+        <div class="footer__bottom">
+            <span>© <?= date('Y') ?> <?= e($siteName) ?></span>
+            <span>Taşınmaz Ticareti Yetki Belgesi No: 3400000 · <a href="<?= url('yonetim') ?>">Yönetim</a></span>
         </div>
-        <div>
-            <h4>İletişim</h4>
-            <p class="footer__contact"><?= icon('pin') ?> <?= e(setting('address')) ?></p>
-            <p class="footer__contact"><?= icon('phone') ?> <a href="<?= tel_link(setting('phone')) ?>"><?= e(setting('phone')) ?></a></p>
-            <p class="footer__contact"><?= icon('mail') ?> <a href="mailto:<?= e(setting('email')) ?>"><?= e(setting('email')) ?></a></p>
-        </div>
-    </div>
-    <div class="container footer__bottom">
-        <span>© <?= date('Y') ?> <?= e($siteName) ?>. Tüm hakları saklıdır.</span>
-        <span>Yetki Belgesi No: 3400000 · <a href="<?= url('yonetim') ?>">Yönetim</a></span>
     </div>
 </footer>
 
-<a class="wa-float" href="<?= wa_link($wa, 'Merhaba, web siteniz üzerinden ulaşıyorum.') ?>" target="_blank" rel="noopener" aria-label="WhatsApp ile yazın">
-    <?= icon('whatsapp') ?><span>WhatsApp</span>
-</a>
+<a class="wa-float" href="<?= wa_link($wa, 'Merhaba, web siteniz üzerinden ulaşıyorum.') ?>" target="_blank" rel="noopener" aria-label="WhatsApp ile yazın"><?= icon('whatsapp') ?></a>
 
 <script src="<?= asset('vendor/leaflet/leaflet.js') ?>" defer></script>
 <script src="<?= asset('js/app.js') ?>" defer></script>

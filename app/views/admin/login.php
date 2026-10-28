@@ -6,7 +6,7 @@
     <meta name="robots" content="noindex">
     <title>Giriş · <?= e(setting('site_name')) ?> Yönetim</title>
     <link rel="icon" href="<?= asset('img/favicon.svg') ?>" type="image/svg+xml">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="<?= asset('css/admin.css') ?>">
 </head>
 <body class="login" style="--bg:url('<?= e(img('https://images.unsplash.com/photo-1600585154340-be6161a56a0c', 1800)) ?>')">

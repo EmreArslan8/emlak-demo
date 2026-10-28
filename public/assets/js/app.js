@@ -98,7 +98,7 @@
         var io = new IntersectionObserver(function (entries) {
             entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('is-in'); io.unobserve(en.target); } });
         }, { rootMargin: '0px 0px -60px 0px' });
-        $$('.card, .agent, .post-card, .feature-box, .cat, .steps li, .agent-row').forEach(function (el) {
+        $$('.card, .agent, .post-card, .feature-box, .district, .showcase, .sold, .quote, .steps li, .agent-row').forEach(function (el) {
             el.classList.add('reveal'); io.observe(el);
         });
     }
