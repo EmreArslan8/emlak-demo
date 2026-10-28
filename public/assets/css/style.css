@@ -629,7 +629,15 @@ a.contact-card:hover { padding-left: 10px; }
     .hero__inner { padding-bottom: 56px; }
     .hero__lead { margin-bottom: 32px; font-size: .98rem; }
     .hero__scroll { display: none; }
-    .search__field { padding: 12px 14px; }
+    .search__fields { grid-template-columns: minmax(0, 1fr) auto; }
+    .search__field { padding: 12px 16px; border: 0 !important; }
+    .search__field:not(:first-child) { display: none; }
+    .search__btn { grid-column: auto; padding: 0 22px; }
+    .search__btn span { display: none; }
+    .search__btn .ico { width: 20px; height: 20px; }
+    .quick-links { flex-wrap: nowrap; overflow-x: auto; margin-right: -20px; padding-right: 20px; scrollbar-width: none; }
+    .quick-links::-webkit-scrollbar { display: none; }
+    .quick-links a { flex: none; }
     .cta { padding: 110px 0; }
     .page-hero { padding: calc(var(--header-h) + 72px) 0 56px; }
     .agent-row { grid-template-columns: 100px minmax(0, 1fr); gap: 18px; padding-bottom: 28px; }
